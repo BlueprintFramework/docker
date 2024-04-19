@@ -8,6 +8,7 @@
   <br/>
   Open-source modding framework for the Pterodactyl panel.
   <br/><br/>
+  <a href="https://github.com/BlueprintFramework/main">Main Repo</a> <b>.</b>
   <a href="https://blueprint.zip">Website</a> <b>·</b>
   <a href="https://discord.gg/CUwHwv6xRe">Community</a> <b>·</b>
   <a href="https://blueprint.zip/docs">Documentation</a>
