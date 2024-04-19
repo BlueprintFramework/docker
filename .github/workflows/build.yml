@@ -11,7 +11,7 @@ on:
 
 jobs:
   push:
-    name: "blueprint:${{ steps.extract_branch.outputs.branch }}"
+    name: "Build and Push Docker Image"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -24,21 +24,22 @@ jobs:
         id: extract_branch
         run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV && echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
 
-      # Setup QEMU for ARM64 Build
       - uses: docker/setup-qemu-action@v2
       - uses: docker/setup-buildx-action@v2
         with:
           buildkitd-flags: --debug
+
       - uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-      - uses: docker/build-push-action@v4
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v4
         with:
           context: .
           file: ./${{ steps.extract_branch.outputs.branch }}/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: |
-            ghcr.io/BlueprintFramework/blueprint:${{ steps.extract_branch.outputs.branch }}
+          tags: ghcr.io/BlueprintFramework/blueprint:${{ steps.extract_branch.outputs.branch }}
