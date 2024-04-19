@@ -1,4 +1,4 @@
-![image](https://github.com/BlueprintFramework/docker/assets/59907407/33c736c6-f40f-4786-86e5-a353191d08f7)
+<img src="[https://user-images.githubusercontent.com/link-to-your-image.png](https://github.com/BlueprintFramework/docker/assets/59907407/33c736c6-f40f-4786-86e5-a353191d08f7)" width="200" />
 # Not yet usable unless you build the image yourself (haven't finished automating the build on Github yet)
 # Blueprint in Docker
 - Drag .blueprint files into the **extensions** folder
