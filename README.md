@@ -1,4 +1,17 @@
-| [![Find Extensions](https://github.com/BlueprintFramework/docker/assets/59907407/27f14617-64d1-4e50-80d8-3ed2848b8223)](https://blueprint.zip/browse) | [![Discord](https://github.com/BlueprintFramework/docker/assets/59907407/96b1213b-94d8-47e4-b1d8-56f2b76c5e17)](https://discord.gg/CUwHwv6xRe) |
+<!-- Header -->
+<br/><p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/BlueprintFramework/main/assets/103201875/c0072c61-0135-4931-b5fa-ce4ee7d79f4a">
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/BlueprintFramework/main/assets/103201875/a652a6e7-b53f-4dcd-ae4e-2051f5c9c7b9">
+    <img alt="Blueprint" src="https://github.com/BlueprintFramework/main/assets/103201875/c0072c61-0135-4931-b5fa-ce4ee7d79f4a" height="30">
+  </picture>
+  <br/>
+  Open-source modding framework for the Pterodactyl panel.
+  <br/><br/>
+  <a href="https://blueprint.zip">Website</a> <b>·</b>
+  <a href="https://discord.gg/CUwHwv6xRe">Community</a> <b>·</b>
+  <a href="https://blueprint.zip/docs">Documentation</a>
+</p>
 
 # Not yet usable unless you build the image yourself (haven't finished automating the build on Github yet)
 # Blueprint in Docker
