@@ -47,7 +47,7 @@ services:
     image: redis:alpine
     restart: always
   panel:
-    image: ghcr.io/pterodactyl/panel:latest
+    image: ghcr.io/BlueprintFramework/blueprint:v1.11.5
     restart: always
     ports:
       - "80:80"
