@@ -1,5 +1,5 @@
 <div style="display: flex; align-items: center;">
-  <div style="flex: 1;">
+  <div>
     ![Blueprint](https://github.com/BlueprintFramework/docker/assets/59907407/4eb6a70b-7f30-476e-81a4-c4f317186db6)
   </div>
   <div style="margin-left: 20px;">
