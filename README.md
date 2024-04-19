@@ -16,9 +16,15 @@
 # Not yet usable unless you build the image yourself (haven't finished automating the build on Github yet)
 # Blueprint in Docker
 - Drag .blueprint files into the **extensions** folder
-- Interact with blueprint through `docker compose exec panel blueprint (command)`
+- Interact with blueprint through
+  - ```bash
+    docker compose exec panel blueprint (command)
+    ```
 - Example using [recolor](https://github.com/sp11rum/recolor):
   1. Download recolor's .zip file
   2. Extract the recolor.blueprint file
-  3. Drag the recolon.blueprint file into the extensions folder, i.e. by default `/srv/pterodactyl/extensions`.
-  4. Install recolor: `docker compose exec panel blueprint -install recolor`
+  3. Drag the recolor.blueprint file into the extensions folder, i.e. by default `/srv/pterodactyl/extensions`.
+  5. Install recolor:
+     ```bash
+     docker compose exec panel blueprint -install recolor
+     ```
