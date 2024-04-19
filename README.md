@@ -1,4 +1,7 @@
-![Blueprint](https://github.com/BlueprintFramework/docker/assets/59907407/4eb6a70b-7f30-476e-81a4-c4f317186db6)
+| | |
+|:---:|:---:|
+| [![Join our Discord](https://discordapp.com/api/guilds/123456789012345678/widget.png?style=banner2)](https://discord.gg/CUwHwv6xRe) | [![Browse Extensions]([https://yourwebsite.com/path/to/blueprint/download/image.png](https://github.com/BlueprintFramework/docker/assets/59907407/4eb6a70b-7f30-476e-81a4-c4f317186db6))]([https://blueprint.zip/](https://blueprint.zip/browse/)) |
+
 # Not yet usable unless you build the image yourself (haven't finished automating the build on Github yet)
 # Blueprint in Docker
 - Drag .blueprint files into the **extensions** folder
