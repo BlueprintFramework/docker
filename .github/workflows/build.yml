@@ -10,17 +10,16 @@ on:
       - Dockerfile
 
 jobs:
-  push:
-    name: "Build and Push Docker Image for ${{ matrix.branch }}"
+  build_and_push:
+    name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        branch: 
-          - 'v1.11.5'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      
+      - name: Extract branch name
+        run: |
+          echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -36,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./${{ matrix.branch }}/Dockerfile
+          file: ./${{ env.BRANCH_NAME }}/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/BlueprintFramework/blueprint:${{ matrix.branch }}
+          tags: ghcr.io/BlueprintFramework/blueprint:${{ env.BRANCH_NAME }}
