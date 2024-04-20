@@ -6,12 +6,20 @@
 <br/><h2 align="center">🐳 Blueprint in Docker</h2>
 
 **Uploading extensions**\
-Extensions must be placed/dragged into the `extensions` folder, instead of the Pterodactyl directory Blueprint normally pulls extensions from.
+Extensions must be placed/dragged into the `extensions` folder.
 
 **Interacting with Blueprint**\
-Instead of running the `blueprint` command to manage Blueprint and it's extensions, the Docker version uses the following command scheme:
+By default, you can only interact with blueprint through the Docker Container, i.e.
 ```bash
 docker compose exec panel blueprint (arguments)
+```
+
+We recommend setting an alias so you can interact with blueprint the same way you would in the non-Docker version (If you have your compose file in a different place, adjust accordingly:
+```bash
+# Set alias for current session
+alias blueprint="docker compose -f /srv/pterodactyl/docker-compose.yml exec panel blueprint"
+# Append to the end of your .bashrc file to make it persistent
+echo 'alias blueprint="docker compose -f /srv/pterodactyl/docker-compose.yml exec panel blueprint"' >> ~/.bashrc
 ```
 
 **Example of installing an extension**\
@@ -22,3 +30,7 @@ Here's a quick example showcasing how you would go about installing extensions o
      ```bash
      docker compose exec panel blueprint -install example
      ```
+     Alternatively, if you have applied the alias we suggested above:
+     ```bash
+     blueprint -install example
+     111
