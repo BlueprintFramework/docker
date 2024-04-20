@@ -1,31 +1,24 @@
 <!-- Header -->
-<br/><p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/BlueprintFramework/main/assets/103201875/c0072c61-0135-4931-b5fa-ce4ee7d79f4a">
-    <source media="(prefers-color-scheme: light)" srcset="https://github.com/BlueprintFramework/main/assets/103201875/a652a6e7-b53f-4dcd-ae4e-2051f5c9c7b9">
-    <img alt="Blueprint" src="https://github.com/BlueprintFramework/main/assets/103201875/c0072c61-0135-4931-b5fa-ce4ee7d79f4a" height="30">
-  </picture>
-  <br/>
-  Open-source modding framework for the Pterodactyl panel.
-  <br/><br/>
-  <a href="https://github.com/BlueprintFramework/main">Main Repo</a> <b>.</b>
-  <a href="https://blueprint.zip">Website</a> <b>·</b>
-  <a href="https://discord.gg/CUwHwv6xRe">Community</a> <b>·</b>
-  <a href="https://blueprint.zip/docs">Documentation</a>
-</p>
+![Blueprint Docker](https://github.com/BlueprintFramework/docker/assets/103201875/f1c39e6e-afb0-4e24-abd3-508ec883d66b)
+<p align="center"><a href="https://github.com/BlueprintFramework/main"><b>Blueprint</b></a>'s extension ecosystem you know and love, in Docker.</p>
 
-# WIP - BUILD IN PROGRESS
-# Blueprint in Docker
-- Drag .blueprint files into the **extensions** folder
-- Interact with blueprint through
-  - ```bash
-    docker compose exec panel blueprint (command)
-    ```
-- Example using [recolor](https://github.com/sp11rum/recolor):
-  1. Download recolor's .zip file
-  2. Extract the recolor.blueprint file
-  3. Drag the recolor.blueprint file into the extensions folder, i.e. by default `/srv/pterodactyl/extensions`.
-  5. Install recolor:
+<!-- Information -->
+<br/><h2 align="center">🐳 Blueprint in Docker</h2>
+
+**Uploading extensions**\
+Extensions must be placed/dragged into the `extensions` folder, instead of the Pterodactyl directory Blueprint normally pulls extensions from.
+
+**Interacting with Blueprint**\
+Instead of running the `blueprint` command to manage Blueprint and it's extensions, the Docker version uses the following command scheme:
+```bash
+docker compose exec panel blueprint (arguments)
+```
+
+**Example of installing an extension**\
+Here's a quick example showcasing how you would go about installing extensions on the Docker version of Blueprint. Note that your experience can differ for every extension.
+  1. [Find an extension](https://blueprint.zip/browse) you would like to install and look for a file with the `.blueprint` file extension.
+  2. Drag/upload the `example.blueprint` file over/onto to your extensions folder, i.e. by default `/srv/pterodactyl/extensions`.
+  3. Install the extension through the Blueprint command line tool:
      ```bash
-     docker compose exec panel blueprint -install recolor
+     docker compose exec panel blueprint -install example
      ```
