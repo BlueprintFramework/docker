@@ -1,9 +1,7 @@
 # Using Alpine-based Pterodactyl Panel image
-FROM ghcr.io/pterodactyl/panel:v1.11.5
+FROM --platform=$TARGETOS/$TARGETARCH ghcr.io/pterodactyl/panel:v1.11.5
 
-ARG BUILD_ARCH
-
-RUN echo $BUILD_ARCH
+ARG TARGETARCH
 
 # Set the Working Directory
 WORKDIR /app
@@ -28,21 +26,18 @@ RUN apk update && apk add --no-cache \
     rsync \
     inotify-tools
 
+# Environment for NVM and Node.js installation
+ENV NVM_DIR="/root/.nvm" \
+    BUILD_ARCH="$TARGETARCH-musl"
+
 # Install NVM and configure the environment
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
-    # Set up nvm profile
     && echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc \
-    # Set unofficial Node.js builds mirror for musl
     && echo 'export NVM_NODEJS_ORG_MIRROR=https://unofficial-builds.nodejs.org/download/release' >> $NVM_DIR/nvm.sh \
-    # Set architecture for NVM
-    && echo "nvm_get_arch() { nvm_echo '${BUILD_ARCH}-musl'; }" >> $NVM_DIR/nvm.sh \
-    # Load NVM and install Node.js LTS version
-    && source ~/.bashrc \
-    && latest_version=$(curl -s https://unofficial-builds.nodejs.org/download/release/  | grep -o 'v20\.[0-9]\{1,\}\.[0-9]\{1,\}' | sort -V | tail -n1) \
-    # Install Yarn globally
+    && echo "nvm_get_arch() { nvm_echo '${BUILD_ARCH}'; }" >> $NVM_DIR/nvm.sh \
+    && . $NVM_DIR/nvm.sh && nvm install 'lts/*' \
     && npm install -g yarn \
-    # Run Yarn
     && yarn
 
 # Download and unzip the latest Blueprint release
