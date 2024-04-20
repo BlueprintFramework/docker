@@ -26,6 +26,9 @@ RUN apk update && apk add --no-cache \
 # Environment for NVM and Node.js installation
 ENV NVM_DIR="/root/.nvm"
 
+# What version of NodeJS to use
+ENV NODE_VERSION="20"
+
 # Install NVM and configure the environment
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
     && echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc \
@@ -34,9 +37,15 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
     && echo 'export NVM_NODEJS_ORG_MIRROR=https://unofficial-builds.nodejs.org/download/release' >> $NVM_DIR/nvm.sh \
     # Set architecture for NVM
     && echo "nvm_get_arch() { nvm_echo 'x86_64-musl'; }" >> $NVM_DIR/nvm.sh \
-    # Load NVM and install Node.js LTS version
-    && . $NVM_DIR/nvm.sh && nvm install 'lts/*' \
+    # Load NVM
+    && . $NVM_DIR/nvm.sh \
+    # Fetch the latest version available for musl with the specified Node version
+    && latest_version=$(curl -s https://unofficial-builds.nodejs.org/download/release/ | grep -o "v$NODE_VERSION\.[0-9]*\.[0-9]*" | sort -V | tail -n1) \
+    # Install the latest Node.js version
+    && nvm install $latest_version \
+    # Install Yarn globally
     && npm install -g yarn \
+    # Run Yarn
     && yarn
 
 # Download and unzip the latest Blueprint release
