@@ -14,7 +14,7 @@
   <a href="https://blueprint.zip/docs">Documentation</a>
 </p>
 
-# Not yet usable unless you build the image yourself (haven't finished automating the build on Github yet)
+# WIP - BUILD IN PROGRESS
 # Blueprint in Docker
 - Drag .blueprint files into the **extensions** folder
 - Interact with blueprint through
