@@ -30,6 +30,11 @@ ENV NVM_DIR="/root/.nvm"
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
     && echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc \
+    # Set unofficial Node.js builds mirror for musl
+    && echo 'export NVM_NODEJS_ORG_MIRROR=https://unofficial-builds.nodejs.org/download/release' >> $NVM_DIR/nvm.sh \
+    # Set architecture for NVM
+    && echo "nvm_get_arch() { nvm_echo 'x86_64-musl'; }" >> $NVM_DIR/nvm.sh \
+    # Load NVM and install Node.js LTS version
     && . $NVM_DIR/nvm.sh && nvm install 'lts/*' \
     && npm install -g yarn \
     && yarn
