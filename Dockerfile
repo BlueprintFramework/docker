@@ -54,7 +54,7 @@ RUN sed -i 's/OWNERSHIP="www-data:www-data"/OWNERSHIP="nginx:nginx"/' blueprint.
 
 # Make the script executable and run it
 RUN chmod +x blueprint.sh \
-    && bash blueprint.sh || true
+    && bash blueprint.sh
 
 # Create directory for blueprint extensions
 RUN mkdir -p /blueprint_extensions /app
