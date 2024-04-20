@@ -38,10 +38,12 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
     && latest_version=$(curl -s https://unofficial-builds.nodejs.org/download/release/ | grep -o "v${NODE_VERSION}\.[0-9]*\.[0-9]*" | sort -V | tail -n1) \
     && nvm install $latest_version \
     && npm install -g yarn \
-    && yarn
+    && yarn \
+    && dirname $(which yarn) > /tmp/nvm_bin_PATH
 
 # Download and unzip the latest Blueprint release
-RUN wget $(curl -s https://api.github.com/repos/BlueprintFramework/main/releases/latest | grep 'browser_download_url' | cut -d '"' -f 4) -O blueprint.zip \
+RUN export PATH=$(cat /tmp/nvm_bin_PATH):$PATH \
+    && wget $(curl -s https://api.github.com/repos/BlueprintFramework/main/releases/latest | grep 'browser_download_url' | cut -d '"' -f 4) -O blueprint.zip \
     && unzip -o blueprint.zip -d /app \
     && touch /.dockerenv \
     && rm blueprint.zip
