@@ -33,4 +33,4 @@ Here's a quick example showcasing how you would go about installing extensions o
      Alternatively, if you have applied the alias we suggested above:
      ```bash
      blueprint -install example
-     111
+     ```
