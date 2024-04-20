@@ -1,6 +1,8 @@
 # Using Alpine-based Pterodactyl Panel image
 FROM ghcr.io/pterodactyl/panel:v1.11.5
 
+ARG BUILD_ARCH
+
 # Set the Working Directory
 WORKDIR /app
 
@@ -24,17 +26,21 @@ RUN apk update && apk add --no-cache \
     rsync \
     inotify-tools
 
-# Install NVM and Node.js 20.12.2
+# Install NVM and configure the environment
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
-    && export NVM_DIR="$HOME/.nvm" \
-    && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
-    && nvm install --lts
-
-# Check Node.js version
-RUN node --version
-
-# Install Yarn using npm
-RUN npm install -g yarn \
+    # Set up nvm profile
+    && echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc \
+    && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc \
+    # Set unofficial Node.js builds mirror for musl
+    && echo 'export NVM_NODEJS_ORG_MIRROR=https://unofficial-builds.nodejs.org/download/release' >> $NVM_DIR/nvm.sh \
+    # Set architecture for NVM
+    && echo "nvm_get_arch() { nvm_echo '${BUILD_ARCH}-musl'; }" >> $NVM_DIR/nvm.sh \
+    # Load NVM and install Node.js LTS version
+    && source ~/.bashrc \
+    && latest_version=$(curl -s https://unofficial-builds.nodejs.org/download/release/  | grep -o 'v20\.[0-9]\{1,\}\.[0-9]\{1,\}' | sort -V | tail -n1) \
+    # Install Yarn globally
+    && npm install -g yarn \
+    # Run Yarn
     && yarn
 
 # Download and unzip the latest Blueprint release
@@ -62,10 +68,10 @@ RUN apk add --no-cache rsync inotify-tools
 # Create the listen.sh script to monitor and sync .blueprint files
 RUN echo -e '#!/bin/sh\n\
 # Initial sync on startup to ensure /app is up to date with /blueprint_extensions\n\
-rsync -av --include="*/" --include="*.blueprint" --exclude="*" --delete /blueprint_extensions/ /app/\n\
+rsync -av --include="*/" --include="*blueprint*" --exclude="/app/.blueprint/" --exclude="*" --delete /blueprint_extensions/ /app/\n\
 # Continuously watch for file changes in /blueprint_extensions\n\
 while inotifywait -r -e create,delete,modify,move --include=".*\\.blueprint$" /blueprint_extensions; do\n\
-    rsync -av --include="*/" --include="*.blueprint" --exclude="*" --delete /blueprint_extensions/ /app/\n\
+    rsync -av --include="*/" --include="*blueprint*" --exclude="/app/.blueprint/" --exclude="*" --delete /blueprint_extensions/ /app/\n\
 done' > /listen.sh && chmod +x /listen.sh
 
 # Set CMD to run the listen script in the background and start supervisord
