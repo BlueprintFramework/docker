@@ -1,7 +1,4 @@
-# Using Alpine-based Pterodactyl Panel image
-FROM --platform=$TARGETOS/$TARGETARCH ghcr.io/pterodactyl/panel:v1.11.5
-
-ARG TARGETARCH
+FROM ghcr.io/pterodactyl/panel:v1.11.5
 
 # Set the Working Directory
 WORKDIR /app
@@ -27,15 +24,12 @@ RUN apk update && apk add --no-cache \
     inotify-tools
 
 # Environment for NVM and Node.js installation
-ENV NVM_DIR="/root/.nvm" \
-    BUILD_ARCH="$TARGETARCH-musl"
+ENV NVM_DIR="/root/.nvm"
 
 # Install NVM and configure the environment
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
     && echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc \
-    && echo 'export NVM_NODEJS_ORG_MIRROR=https://unofficial-builds.nodejs.org/download/release' >> $NVM_DIR/nvm.sh \
-    && echo "nvm_get_arch() { nvm_echo '${BUILD_ARCH}'; }" >> $NVM_DIR/nvm.sh \
     && . $NVM_DIR/nvm.sh && nvm install 'lts/*' \
     && npm install -g yarn \
     && yarn
@@ -59,10 +53,7 @@ RUN chmod +x blueprint.sh \
 # Create directory for blueprint extensions
 RUN mkdir -p /blueprint_extensions /app
 
-# Install rsync and inotify-tools for file synchronization and monitoring
-RUN apk add --no-cache rsync inotify-tools
-
-# Create the listen.sh script to monitor and sync .blueprint files
+# Create the listen.sh script to monitor and sync blueprint files
 RUN echo -e '#!/bin/sh\n\
 # Initial sync on startup to ensure /app is up to date with /blueprint_extensions\n\
 rsync -av --include="*/" --include="*blueprint*" --exclude="/app/.blueprint/" --exclude="*" --delete /blueprint_extensions/ /app/\n\
