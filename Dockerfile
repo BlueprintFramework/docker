@@ -64,10 +64,10 @@ RUN mkdir -p /blueprint_extensions /app
 # Create the listen.sh script to monitor and sync blueprint files
 RUN echo -e '#!/bin/sh\n\
 # Initial sync on startup to ensure /app is up to date with /blueprint_extensions\n\
-rsync -av --include="*blueprint*" --exclude="/app/.blueprint/" --exclude="/app/blueprint.sh" --exclude="*" --delete /blueprint_extensions/ /app/\n\
+rsync -av --exclude=".blueprint" --include="*.blueprint*" --exclude="*" --delete /blueprint_extensions/ /app/\n\
 # Continuously watch for file changes in /blueprint_extensions\n\
 while inotifywait -r -e create,delete,modify,move --include=".*\\.blueprint$" /blueprint_extensions; do\n\
-    rsync -av --include="*blueprint*" --exclude="/app/.blueprint/" --exclude="/app/blueprint.sh" --exclude="*" --delete /blueprint_extensions/ /app/\n\
+    rsync -av --exclude=".blueprint" --include="*.blueprint*" --exclude="*" --delete /blueprint_extensions/ /app/\n\
 done' > /listen.sh && chmod +x /listen.sh
 
 # Set CMD to run the listen script in the background and start supervisord
