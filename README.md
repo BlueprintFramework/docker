@@ -9,7 +9,7 @@
 Extensions must be placed/dragged into the `extensions` folder.
 
 **Interacting with Blueprint**\
-By default, you can only interact with blueprint through the Docker Container, i.e.
+By default, you can only interact with blueprint by going through the Docker command line, i.e.
 ```bash
 docker compose exec panel blueprint (arguments)
 ```
