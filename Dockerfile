@@ -25,25 +25,23 @@ RUN apk update && apk add --no-cache \
 
 # Environment for NVM and Node.js installation
 ENV NVM_DIR="/root/.nvm"
-ENV NODE_VERSION="20"
+ENV NODE_BASE_VERSION="20"
 # Set unofficial Node.js builds mirror for musl
 ENV NVM_NODEJS_ORG_MIRROR="https://unofficial-builds.nodejs.org/download/release"
 
 # Install NVM and configure the environment
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
-    && echo 'export NVM_DIR="/root/.nvm"' >> /etc/profile.d/nvm.sh \
-    && echo '[ -s "/root/.nvm/nvm.sh" ] && \. "/root/.nvm/nvm.sh"' >> /etc/profile.d/nvm.sh \
-    && echo "nvm_get_arch() { nvm_echo 'x64-musl'; }" >> /root/.nvm/nvm.sh \
-    && . /etc/profile.d/nvm.sh \
-    && latest_version=$(curl -s https://unofficial-builds.nodejs.org/download/release/ | grep -o "v${NODE_VERSION}\.[0-9]*\.[0-9]*" | sort -V | tail -n1) \
+    && [ -s $NVM_DIR/nvm.sh ] && \. $NVM_DIR/nvm.sh \
+    && echo "nvm_get_arch() { nvm_echo 'x64-musl'; }" >> $NVM_DIR/nvm.sh \
+    && source $NVM_DIR/nvm.sh \
+    && latest_version=$(curl -s https://unofficial-builds.nodejs.org/download/release/ | grep -o "v${NODE_BASE_VERSION}\.[0-9]*\.[0-9]*" | sort -V | tail -n1) \
     && nvm install $latest_version \
+    && npm config set prefix /usr \
     && npm install -g yarn \
-    && yarn \
-    && dirname $(which yarn) > /tmp/nvm_bin_PATH
+    && yarn
 
 # Download and unzip the latest Blueprint release
-RUN export PATH=$(cat /tmp/nvm_bin_PATH):$PATH \
-    && wget $(curl -s https://api.github.com/repos/BlueprintFramework/main/releases/latest | grep 'browser_download_url' | cut -d '"' -f 4) -O blueprint.zip \
+RUN wget $(curl -s https://api.github.com/repos/BlueprintFramework/main/releases/latest | grep 'browser_download_url' | cut -d '"' -f 4) -O blueprint.zip \
     && unzip -o blueprint.zip -d /app \
     && touch /.dockerenv \
     && rm blueprint.zip
