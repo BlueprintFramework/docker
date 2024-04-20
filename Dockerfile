@@ -34,14 +34,14 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
     && echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc \
     # Set unofficial Node.js builds mirror for musl
-    && echo 'export NVM_NODEJS_ORG_MIRROR=https://unofficial-builds.nodejs.org/download/release' >> ~/.bashrc \
-    # Set architecture for NVM
-    && echo "nvm_get_arch() { nvm_echo 'x86_64-musl'; }" >> $NVM_DIR/nvm.sh \
+    && echo 'export NVM_NODEJS_ORG_MIRROR=https://unofficial-builds.nodejs.org/download/release' >> $NVM_DIR/nvm.sh \
+    # Override the nvm_get_arch function to specify musl architecture
+    && echo "nvm_get_arch() { nvm_echo 'x64-musl'; }" >> $NVM_DIR/nvm.sh \
     # Load NVM
-    && source ~/.bashrc \
+    && . $NVM_DIR/nvm.sh \
     # Fetch the latest version available for musl with the specified Node version
-    && latest_version=$(curl -s https://unofficial-builds.nodejs.org/download/release/ | grep -o "v$NODE_VERSION\.[0-9]*\.[0-9]*" | sort -V | tail -n1) \
-    # Install the latest Node.js version
+    && latest_version=$(curl -s https://unofficial-builds.nodejs.org/download/release/ | grep -o "v${NODE_VERSION}\.[0-9]*\.[0-9]*" | sort -V | tail -n1) \
+    # Install the latest Node.js version fetched
     && nvm install $latest_version \
     # Install Yarn globally
     && npm install -g yarn \
