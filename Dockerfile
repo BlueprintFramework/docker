@@ -25,27 +25,18 @@ RUN apk update && apk add --no-cache \
 
 # Environment for NVM and Node.js installation
 ENV NVM_DIR="/root/.nvm"
-
-# What version of NodeJS to use
 ENV NODE_VERSION="20"
 
 # Install NVM and configure the environment
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
-    && echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc \
-    && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc \
-    # Set unofficial Node.js builds mirror for musl
-    && echo 'export NVM_NODEJS_ORG_MIRROR=https://unofficial-builds.nodejs.org/download/release' >> $NVM_DIR/nvm.sh \
-    # Override the nvm_get_arch function to specify musl architecture
-    && echo "nvm_get_arch() { nvm_echo 'x64-musl'; }" >> $NVM_DIR/nvm.sh \
-    # Load NVM
-    && . $NVM_DIR/nvm.sh \
-    # Fetch the latest version available for musl with the specified Node version
+    && echo 'export NVM_DIR="/root/.nvm"' >> /etc/profile.d/nvm.sh \
+    && echo '[ -s "/root/.nvm/nvm.sh" ] && \. "/root/.nvm/nvm.sh"' >> /etc/profile.d/nvm.sh \
+    && echo "nvm_get_arch() { nvm_echo 'x64-musl'; }" >> /root/.nvm/nvm.sh \
+    && echo 'export NVM_NODEJS_ORG_MIRROR=https://unofficial-builds.nodejs.org/download/release' >> /root/.nvm/nvm.sh \
+    && . /etc/profile.d/nvm.sh \
     && latest_version=$(curl -s https://unofficial-builds.nodejs.org/download/release/ | grep -o "v${NODE_VERSION}\.[0-9]*\.[0-9]*" | sort -V | tail -n1) \
-    # Install the latest Node.js version fetched
     && nvm install $latest_version \
-    # Install Yarn globally
     && npm install -g yarn \
-    # Run Yarn
     && yarn
 
 # Download and unzip the latest Blueprint release
