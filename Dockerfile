@@ -1,7 +1,7 @@
 # Using Alpine-based Pterodactyl Panel image
 FROM ghcr.io/pterodactyl/panel:v1.11.5
 
-ARG BUILD_ARCH
+ENV BUILD_ARCH=amd64
 
 # Set the Working Directory
 WORKDIR /app
