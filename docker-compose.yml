@@ -47,8 +47,7 @@ services:
     image: redis:alpine
     restart: always
   panel:
-    # image: ghcr.io/BlueprintFramework/blueprint:v1.11.5
-    build: . # Until the image above is actually built in Github, build the image manually on your local machine
+    image: ghcr.io/BlueprintFramework/blueprint:v1.11.5
     restart: always
     ports:
       - "80:80"
