@@ -9,12 +9,12 @@
 Extensions must be placed/dragged into the `extensions` folder.
 
 **Interacting with Blueprint**\
-By default, you can only interact with blueprint by going through the Docker command line, i.e.
+By default, you can only interact with Blueprint by going through the Docker command line, i.e.
 ```bash
 docker compose exec panel blueprint (arguments)
 ```
 
-We recommend setting an alias so you can interact with blueprint the same way you would in the non-Docker version (If you have your compose file in a different place, adjust accordingly:
+We recommend setting an alias so you can interact with Blueprint the same way you would in the non-Docker version (If you have your compose file in a different place, adjust accordingly:
 ```bash
 # Set alias for current session
 alias blueprint="docker compose -f /srv/pterodactyl/docker-compose.yml exec panel blueprint"
