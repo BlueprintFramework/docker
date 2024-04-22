@@ -51,11 +51,11 @@ RUN wget $(curl -s https://api.github.com/repos/BlueprintFramework/main/releases
 ENV TERM=xterm
 
 # Make blueprint.sh set ownership to nginx:nginx
-RUN sed -i 's/OWNERSHIP="www-data:www-data"/OWNERSHIP="nginx:nginx"/' blueprint.sh || true
+RUN sed -i 's/OWNERSHIP="www-data:www-data"/OWNERSHIP="nginx:nginx"/' blueprint.sh
 
 # Make the script executable and run it
 RUN chmod +x blueprint.sh \
-    && bash blueprint.sh
+    && bash blueprint.sh || true
 
 # Create directory for blueprint extensions
 RUN mkdir -p /blueprint_extensions /app
