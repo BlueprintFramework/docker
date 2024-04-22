@@ -34,3 +34,22 @@ Here's a quick example showcasing how you would go about installing extensions o
      ```bash
      blueprint -install example
      ```
+
+**So, you installed your first extension. Congratulations! Blueprint is now keeping persistent data inside the pterodactyl_app volume, so you'll want to start backing that volume up regularly.**
+## Make a directory and script for backups
+```bash
+mkdir /srv/backups
+cat <<'EOF' > /srv/backups/backup.sh
+#!/bin/bash
+
+docker compose -f /srv/pterodactyl/docker-compose.yml down
+tar czvf /srv/backups/pterodactyl_app_$(date +%m-%d-%Y).tar.gz -C /var/lib/docker/volumes/pterodactyl_app/_data .
+docker compose -f /srv/pterodactyl/docker-compose.yml up -d
+EOF
+chmod +x /srv/backups/backup.sh
+```
+
+## Set a crontab to back up your panel (choose a time when it will be least likely to be being used)
+```bash
+(crontab -l 2>/dev/null; echo "59 23 * * * /srv/backups/backup.sh") | crontab -
+```
