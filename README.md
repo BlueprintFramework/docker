@@ -5,16 +5,16 @@
 <!-- Information -->
 <br/><h2 align="center">🐳 Blueprint in Docker</h2>
 
-**Uploading extensions**\
+## Uploading extensions\
 Extensions must be placed/dragged into the `extensions` folder.
 
-**Interacting with Blueprint**\
+## Interacting with Blueprint\
 By default, you can only interact with Blueprint by going through the Docker command line, i.e.
 ```bash
 docker compose exec panel blueprint (arguments)
 ```
 
-We recommend setting an alias so you can interact with Blueprint the same way you would in the non-Docker version (If you have your compose file in a different place, adjust accordingly:
+### We recommend setting an alias so you can interact with Blueprint the same way you would in the non-Docker version (If you have your compose file in a different place, adjust accordingly:
 ```bash
 # Set alias for current session
 alias blueprint="docker compose -f /srv/pterodactyl/docker-compose.yml exec panel blueprint"
@@ -22,7 +22,7 @@ alias blueprint="docker compose -f /srv/pterodactyl/docker-compose.yml exec pane
 echo 'alias blueprint="docker compose -f /srv/pterodactyl/docker-compose.yml exec panel blueprint"' >> ~/.bashrc
 ```
 
-**Example of installing an extension**\
+### Example of installing an extension\
 Here's a quick example showcasing how you would go about installing extensions on the Docker version of Blueprint. Note that your experience can differ for every extension.
   1. [Find an extension](https://blueprint.zip/browse) you would like to install and look for a file with the `.blueprint` file extension.
   2. Drag/upload the `example.blueprint` file over/onto to your extensions folder, i.e. by default `/srv/pterodactyl/extensions`.
@@ -35,8 +35,8 @@ Here's a quick example showcasing how you would go about installing extensions o
      blueprint -install example
      ```
 
-**So, you installed your first extension. Congratulations! Blueprint is now keeping persistent data inside the pterodactyl_app volume, so you'll want to start backing that volume up regularly.**
-## Make a directory and script for backups
+## So, you installed your first extension. Congratulations! Blueprint is now keeping persistent data inside the pterodactyl_app volume, so you'll want to start backing that volume up regularly.
+### Make a directory and script for backups
 ```bash
 mkdir /srv/backups
 cat <<'EOF' > /srv/backups/backup.sh
@@ -49,7 +49,7 @@ EOF
 chmod +x /srv/backups/backup.sh
 ```
 
-## Set a crontab to back up your panel (choose a time when it will be least likely to be being used)
+### Set a crontab to back up your panel (choose a time when it will be least likely to be being used)
 ```bash
 (crontab -l 2>/dev/null; echo "59 23 * * * /srv/backups/backup.sh") | crontab -
 ```
