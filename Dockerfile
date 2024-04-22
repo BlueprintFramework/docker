@@ -13,6 +13,7 @@ RUN apk update && apk add --no-cache \
     wget \
     nodejs \
     npm \
+    coreutils \
     build-base \
     musl-dev \
     libgcc \
