@@ -35,7 +35,8 @@ Here's a quick example showcasing how you would go about installing extensions o
      blueprint -install example
      ```
 
-## So, you installed your first extension. Congratulations! Blueprint is now keeping persistent data inside the pterodactyl_app volume, so you'll want to start backing that volume up regularly.
+### So, you installed your first extension. Congratulations! Blueprint is now keeping persistent data inside the pterodactyl_app volume, so you'll want to start backing that volume up regularly.
+
 ### Make a directory and script for backups
 ```bash
 mkdir /srv/backups
