@@ -37,14 +37,24 @@ Here's a quick example showcasing how you would go about installing extensions o
 
 #### So, you installed your first extension. Congratulations! Blueprint is now keeping persistent data inside the pterodactyl_app volume, so you'll want to start backing that volume up regularly.
 
+### First, we'll install Restic to handle backups
+Why Restic? Compression, de-duplication, and incremental backups. Save on space compared to simply archiving the directory each time.
+The package name is usually `restic`, i.e.
+`sudo apt install restic` (Ubuntu / Debian / Linux Mint)
+`sudo dnf install restic` (Fedora)
+`sudo dnf install epel-release && sudo dnf install restic` (Rocky Linux / AlmaLinux / CentOS)
+`sudo pacman -S restic` (Arch Linux)
+`sudo zypper install restic` (openSUSE)
+
 #### Make a directory and script for backups
 ```bash
-mkdir /srv/backups
+mkdir -p /srv/backups/pterodactyl
+restic init --repo /srv/backups/pterodactyl
 cat <<'EOF' > /srv/backups/backup.sh
 #!/bin/bash
 
 docker compose -f /srv/pterodactyl/docker-compose.yml down
-tar czvf /srv/backups/pterodactyl_app_$(date +%m-%d-%Y).tar.gz -C /var/lib/docker/volumes/pterodactyl_app/_data .
+restic backup /var/lib/docker/volumes/pterodactyl_app/_data --repo /srv/backups/pterodactyl
 docker compose -f /srv/pterodactyl/docker-compose.yml up -d
 EOF
 chmod +x /srv/backups/backup.sh
@@ -53,4 +63,18 @@ chmod +x /srv/backups/backup.sh
 #### Set a crontab to back up your panel (choose a time when it will be least likely to be being used)
 ```bash
 (crontab -l 2>/dev/null; echo "59 23 * * * /srv/backups/backup.sh") | crontab -
+```
+
+#### Well, great. I have daily backups now, and they're set to keep at most 30 backups at a time. How can I restore from one of them?
+You can list snapshots with ``restic snapshots --repo /srv/backups/pterodactyl``
+You're looking for a value for **ID** that looks something like ``46adb587``. **Time** will be right next to each ID, so you can see what day your backups are from.
+
+#### Once you've determined which snapshot you want to restore, stop your compose stack, restore your data, and start your stack again
+```bash
+docker compose -f /srv/pterodactyl/docker-compose.yml down
+# Clear the directory so the restoration will be clean
+rm -rf /var/lib/docker/volumes/pterodactyl_app/_data
+# Remember to replace "46adb587" with your actual ID of the snapshot you want to restore
+restic restore 46adb587 --repo /srv/backups/pterodactyl --target /var/lib/docker/volumes/pterodactyl_app/_data
+docker compose -f /srv/pterodactyl/docker-compose.yml up -d
 ```
