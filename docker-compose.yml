@@ -9,7 +9,7 @@ x-common:
   panel:
     &panel-environment
     APP_URL: "http://example.com"
-    # A list of valid timezones can be found here: http://php.net/manual/en/timezones.php
+    # A list of valid timezones can be found here: https://php.net/manual/en/timezones.php
     APP_TIMEZONE: "UTC"
     APP_SERVICE_AUTHOR: "noreply@example.com"
     # Uncomment the line below and set to a non-empty value if you want to use Let's Encrypt
