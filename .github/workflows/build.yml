@@ -5,8 +5,8 @@ on:
     - cron: "0 0 * * 1"
   push:
     branches:
-      - v1.11.5
-      - v1.11.6
+      - 'v1.11.5'
+      - 'v1.11.6'
     paths:
       - Dockerfile
 
