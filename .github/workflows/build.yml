@@ -23,6 +23,7 @@ jobs:
         branch:
           - v1.11.5
           - v1.11.6
+          - v1.11.7
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
