@@ -42,7 +42,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
     && yarn
 
 # Download and unzip the latest Blueprint release
-RUN wget $(curl -s https://api.github.com/repos/BlueprintFramework/main/releases/latest | grep 'browser_download_url' | cut -d '"' -f 4) -O blueprint.zip \
+RUN wget $(curl -s https://api.github.com/repos/BlueprintFramework/framework/releases/latest | grep 'browser_download_url' | cut -d '"' -f 4) -O blueprint.zip \
     && unzip -o blueprint.zip -d /app \
     && touch /.dockerenv \
     && rm blueprint.zip
