@@ -39,7 +39,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-
+      
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
@@ -47,10 +47,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/blueprintframework/blueprint:${{ github.event.inputs.branch || matrix.branch }}
-
-      - name: Tag as Latest and Push
-        if: ${{ matrix.branch == 'v1.11.7' }}
-        run: |
-          docker tag ghcr.io/blueprintframework/blueprint:${{ github.event.inputs.branch || matrix.branch }} ghcr.io/blueprintframework/blueprint:latest
-          docker push ghcr.io/blueprintframework/blueprint:latest
+          tags: |
+            ghcr.io/blueprintframework/blueprint:${{ github.event.inputs.branch || matrix.branch }}
+            ${{ (matrix.branch == 'v1.11.7') && 'ghcr.io/blueprintframework/blueprint:latest' }}
