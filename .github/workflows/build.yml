@@ -49,7 +49,7 @@ jobs:
         shell: bash
         run: |
           # Determine the tag based on the branch
-          if [[ "${{ matrix.branch }}" == "master" ]]; then
+          if [[ "${{ matrix.branch }}" == "Master" ]]; then
             echo "TAGS=ghcr.io/blueprintframework/blueprint:latest" >> $GITHUB_ENV
           else
             echo "TAGS=ghcr.io/blueprintframework/blueprint:${{ matrix.branch }}" >> $GITHUB_ENV
