@@ -49,30 +49,8 @@ jobs:
           push: true
           tags: ghcr.io/blueprintframework/blueprint:${{ github.event.inputs.branch || matrix.branch }}
 
-      - name: Set Latest Version
-        run: echo "LATEST_VERSION=${{ matrix.branch }}" >> $GITHUB_ENV
-
-  tag_latest:
-    name: Tag Latest Docker Image
-    runs-on: ubuntu-latest
-    needs: build_and_push
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.REGISTRY_TOKEN }}
-
-      - name: Tag and Push Latest Image
+      - name: Tag as Latest and Push
+        if: ${{ matrix.branch == 'v1.11.7' }}
         run: |
-          IMAGE_NAME=ghcr.io/blueprintframework/blueprint
-          docker pull $IMAGE_NAME:${{ env.LATEST_VERSION }}
-          docker tag $IMAGE_NAME:${{ env.LATEST_VERSION }} $IMAGE_NAME:latest
-          docker push $IMAGE_NAME:latest
+          docker tag ghcr.io/blueprintframework/blueprint:${{ github.event.inputs.branch || matrix.branch }} ghcr.io/blueprintframework/blueprint:latest
+          docker push ghcr.io/blueprintframework/blueprint:latest
