@@ -47,4 +47,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/blueprintframework/blueprint:${{ github.event.inputs.branch || matrix.branch }}
+          tags: ghcr.io/blueprintframework/blueprint:${{ github.event.inputs.branch || matrix.branch }},ghcr.io/blueprintframework/blueprint:latest
