@@ -1,4 +1,7 @@
 name: Build and Push Docker Images
+
+# The master branch will have the :latest tag will will be kept one to one with the latest versioned release.
+
 on:
   workflow_dispatch:
     inputs:
@@ -9,6 +12,7 @@ on:
     - cron: "0 0 * * 1"
   push:
     branches:
+      - 'master'
       - 'v1.*'
     paths:
       - Dockerfile
@@ -21,6 +25,7 @@ jobs:
       fail-fast: false
       matrix:
         branch:
+          - master
           - v1.11.5
           - v1.11.6
           - v1.11.7
@@ -39,14 +44,15 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-      
+
       - name: Prepare tags
-        id: prep
         shell: bash
         run: |
-          echo "TAGS=ghcr.io/blueprintframework/blueprint:${{ github.event.inputs.branch || matrix.branch }}" >> $GITHUB_ENV
-          if [ "${{ matrix.branch }}" == "v1.11.7" ]; then
-            echo "TAGS=${TAGS},ghcr.io/blueprintframework/blueprint:latest" >> $GITHUB_ENV
+          # Determine the tag based on the branch
+          if [[ "${{ matrix.branch }}" == "master" ]]; then
+            echo "TAGS=ghcr.io/blueprintframework/blueprint:latest" >> $GITHUB_ENV
+          else
+            echo "TAGS=ghcr.io/blueprintframework/blueprint:${{ matrix.branch }}" >> $GITHUB_ENV
           fi
       
       - name: Build and Push Docker Image
