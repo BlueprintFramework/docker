@@ -78,3 +78,11 @@ rm -rf /var/lib/docker/volumes/pterodactyl_app/_data
 restic restore 46adb587 --repo /srv/backups/pterodactyl --target /var/lib/docker/volumes/pterodactyl_app/_data
 docker compose -f /srv/pterodactyl/docker-compose.yml up -d
 ```
+
+
+<!-- copyright footer -->
+<br/><br/>
+<p align="center">
+  $\color{#4b4950}{\textsf{© 2024 Ivy (prpl.wtf) and Loki}}$
+  <br/><br/><img src="https://github.com/BlueprintFramework/docker/assets/103201875/68a6038e-4922-4e1a-b1d4-f58a4c5db397"/>
+</p>
