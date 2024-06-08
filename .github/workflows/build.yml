@@ -58,7 +58,7 @@ jobs:
             echo "VERSION_TAG=${{ matrix.branch }}" >> $GITHUB_ENV
             echo "TAGS=ghcr.io/blueprintframework/blueprint:${{ matrix.branch }}" >> $GITHUB_ENV
           fi
-      
+            
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
@@ -67,3 +67,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ${{ env.TAGS }}
+          build-args: VERSION_TAG=${{ env.VERSION_TAG }}
