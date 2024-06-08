@@ -45,13 +45,17 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: Prepare tags
+      - name: Prepare tags and version
         shell: bash
         run: |
-          # Determine the tag based on the branch
           if [[ "${{ matrix.branch }}" == "Master" ]]; then
+            # Dynamically fetch the latest version tag for the Master branch
+            LATEST_VERSION=$(git tag | grep '^v' | sort -V | tail -n1)
+            echo "VERSION_TAG=$LATEST_VERSION" >> $GITHUB_ENV
             echo "TAGS=ghcr.io/blueprintframework/blueprint:latest" >> $GITHUB_ENV
           else
+            # Use the branch name as the version tag
+            echo "VERSION_TAG=${{ matrix.branch }}" >> $GITHUB_ENV
             echo "TAGS=ghcr.io/blueprintframework/blueprint:${{ matrix.branch }}" >> $GITHUB_ENV
           fi
       
