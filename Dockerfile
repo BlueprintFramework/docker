@@ -1,4 +1,5 @@
-FROM ghcr.io/pterodactyl/panel:v1.11.7
+ARG VERSION_TAG
+FROM ghcr.io/pterodactyl/panel:${VERSION_TAG}
 
 # Set the Working Directory
 WORKDIR /app
