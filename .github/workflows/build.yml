@@ -46,7 +46,7 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ matrix.version }}" == "${{ env.LATEST_VERSION }}" ]]; then
-            TAGS="ghcr.io/blueprintframework/blueprint:latest ghcr.io/blueprintframework/blueprint:${{ matrix.version }}"
+            TAGS="ghcr.io/blueprintframework/blueprint:latest,ghcr.io/blueprintframework/blueprint:${{ matrix.version }}"
           else
             TAGS="ghcr.io/blueprintframework/blueprint:${{ matrix.version }}"
           fi
