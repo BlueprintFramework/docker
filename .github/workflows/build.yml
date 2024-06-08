@@ -1,19 +1,14 @@
 name: Build and Push Docker Images
 
-# The master branch will have the :latest tag will will be kept one to one with the latest versioned release.
-
 on:
   workflow_dispatch:
     inputs:
       branch:
         description: 'Branch to build (optional)'
         required: false
-  schedule:
-    - cron: "0 0 * * 1"
   push:
     branches:
       - 'Master'
-      - 'v1.*'
     paths:
       - Dockerfile
 
@@ -21,11 +16,12 @@ jobs:
   build_and_push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    env:
+      LATEST_VERSION: v1.11.7 # Determines :latest tag
     strategy:
       fail-fast: false
       matrix:
-        branch:
-          - Master
+        version:
           - v1.11.5
           - v1.11.6
           - v1.11.7
@@ -33,7 +29,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.branch || matrix.branch }}
+          ref: ${{ github.event.inputs.branch || 'refs/heads/Master' }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -46,15 +42,17 @@ jobs:
           password: ${{ secrets.REGISTRY_TOKEN }}
 
       - name: Prepare tags
+        id: prep_tags
         shell: bash
         run: |
-          # Determine the tag based on the branch
-          if [[ "${{ matrix.branch }}" == "Master" ]]; then
-            echo "TAGS=ghcr.io/blueprintframework/blueprint:latest" >> $GITHUB_ENV
+          if [[ "${{ matrix.version }}" == "${{ env.LATEST_VERSION }}" ]]; then
+            TAGS="ghcr.io/blueprintframework/blueprint:latest ghcr.io/blueprintframework/blueprint:${{ matrix.version }}"
           else
-            echo "TAGS=ghcr.io/blueprintframework/blueprint:${{ matrix.branch }}" >> $GITHUB_ENV
+            TAGS="ghcr.io/blueprintframework/blueprint:${{ matrix.version }}"
           fi
-      
+          echo "VERSION_TAG=${{ matrix.version }}" >> $GITHUB_ENV
+          echo "TAGS=$TAGS" >> $GITHUB_ENV
+
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
@@ -63,3 +61,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ${{ env.TAGS }}
+          build-args: VERSION_TAG=${{ env.VERSION_TAG }}
