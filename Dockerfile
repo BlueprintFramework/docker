@@ -52,7 +52,10 @@ RUN wget $(curl -s https://api.github.com/repos/BlueprintFramework/framework/rel
 ENV TERM=xterm
 
 # Make blueprint.sh set ownership to nginx:nginx
-RUN sed -i 's/www-data/nginx/g' blueprint.sh
+RUN sed -i -E \
+    -e "s|OWNERSHIP=\"www-data:www-data\" #;|OWNERSHIP=\"nginx:nginx\" #;|g" \
+    -e "s|WEBUSER=\"www-data\" #;|WEBUSER=\"nginx\" #;|g" \
+    blueprint.sh
 
 # Make the script executable and run it
 RUN chmod +x blueprint.sh \
