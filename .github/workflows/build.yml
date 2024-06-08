@@ -45,20 +45,16 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: Prepare tags and version
+      - name: Prepare tags
         shell: bash
         run: |
+          # Determine the tag based on the branch
           if [[ "${{ matrix.branch }}" == "Master" ]]; then
-            # Dynamically fetch the latest version tag for the Master branch
-            LATEST_VERSION=$(git tag | grep '^v' | sort -V | tail -n1)
-            echo "VERSION_TAG=$LATEST_VERSION" >> $GITHUB_ENV
             echo "TAGS=ghcr.io/blueprintframework/blueprint:latest" >> $GITHUB_ENV
           else
-            # Use the branch name as the version tag
-            echo "VERSION_TAG=${{ matrix.branch }}" >> $GITHUB_ENV
             echo "TAGS=ghcr.io/blueprintframework/blueprint:${{ matrix.branch }}" >> $GITHUB_ENV
           fi
-            
+      
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
@@ -67,4 +63,3 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ${{ env.TAGS }}
-          build-args: VERSION_TAG=${{ env.VERSION_TAG }}
