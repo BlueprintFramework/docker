@@ -35,7 +35,7 @@ Here's a quick example showcasing how you would go about installing extensions o
      blueprint -install example
      ```
 
-#### So, you installed your first extension. Congratulations! Blueprint is now keeping persistent data inside the pterodactyl_app volume, so you'll want to start backing that volume up regularly.
+#### So, you installed your first extension. Congratulations! Blueprint is now keeping persistent data inside the `pterodactyl_app` volume, so you'll want to start backing that volume up regularly.
 
 ### First, we'll install Restic to handle backups
 Why Restic? Compression, de-duplication, and incremental backups. Save on space compared to simply archiving the directory each time.
