@@ -36,7 +36,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
     && [ -s $NVM_DIR/nvm.sh ] && \. $NVM_DIR/nvm.sh \
     && echo "nvm_get_arch() { nvm_echo 'x64-musl'; }" >> $NVM_DIR/nvm.sh \
     && source $NVM_DIR/nvm.sh \
-    && latest_version=$(curl -s https://unofficial-builds.nodejs.org/download/release/ | grep -o "v${NODE_BASE_VERSION}\.[0-9]*\.[0-9]*" | sort -V | tail -n1) \
+    && latest_version=$(nvm ls-remote | grep 'Latest LTS' | awk '{print $1}' | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' | sort -t. -k1,1nr -k2,2nr -k3,3nr | head -n1) \
     && nvm install $latest_version \
     && npm config set prefix /usr \
     && npm install -g yarn \
