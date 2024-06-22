@@ -40,13 +40,14 @@ Here's a quick example showcasing how you would go about installing extensions o
 ### First, we'll install Restic to handle backups
 Why Restic? Compression, de-duplication, and incremental backups. Save on space compared to simply archiving the directory each time.
 The package name is usually `restic`, i.e.
-| Operating System                 | Command                                        |
-|----------------------------------|------------------------------------------------|
-| Ubuntu / Debian / Linux Mint     | `sudo apt install restic`                      |
-| Fedora                           | `sudo dnf install restic`                      |
-| Rocky Linux / AlmaLinux / CentOS | `sudo dnf -y install epel-release && sudo dnf install restic` |
-| Arch Linux                       | `sudo pacman -S restic`                        |
-| openSUSE                         | `sudo zypper install restic`                   |
+| Operating System                 | Command                                                         |
+|----------------------------------|-----------------------------------------------------------------|
+| Ubuntu / Debian / Linux Mint     | `sudo apt -y install restic`                                    |
+| Fedora                           | `sudo dnf -y install restic`                                    |
+| Rocky Linux / AlmaLinux / CentOS | `sudo dnf -y install epel-release && sudo dnf -y install restic`|
+| Arch Linux                       | `sudo pacman -S --noconfirm restic`                             |
+| openSUSE                         | `sudo zypper install -n restic`                                 |
+| Gentoo                           | `sudo emerge --ask=n app-backup/restic`                         |
 
 #### Make a directory and script for backups
 ```bash
