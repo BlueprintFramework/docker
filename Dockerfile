@@ -59,7 +59,7 @@ RUN sed -i -E \
 
 # Make the script executable and run it
 RUN chmod +x blueprint.sh \
-    && bash blueprint.sh || true
+    && bash blueprint.sh
 
 # Create directory for blueprint extensions
 RUN mkdir -p /blueprint_extensions /app
