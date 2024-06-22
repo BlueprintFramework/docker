@@ -97,6 +97,10 @@ docker compose -f /srv/pterodactyl/docker-compose.yml up -d
   ```
 ## Updating your version of Blueprint
 - /app is persistent data, so updating your panel image will NOT update blueprint. You _do_ have to manually update it despite pulling a newer image.
+- Note that if you experience issues with an update, you can use ``blueprint -upgrade remote`` instead of ``blueprint -upgrade``. By adding ``remote``, you tell it to pull the latest commit from the Github Repo rather than that latest release. If there are any bug fixes that haven't made it into a release yet, this would grab them. You can also head into the [Blueprint Discord Server](<https://discord.gg/CUwHwv6xRe>) for support. Remember to be clear about the issue you're facing and include
+  - What you were trying to do
+  - What you did
+  - What happened when you did (logs/output, warnings, errors, etc.)
 - Go to the directory of your docker-compose.yml file
 ### If you have set the alias as we recommend above
 - ```bash
