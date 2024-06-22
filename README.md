@@ -79,6 +79,33 @@ restic restore 46adb587 --repo /srv/backups/pterodactyl --target /var/lib/docker
 docker compose -f /srv/pterodactyl/docker-compose.yml up -d
 ```
 
+# Updating Blueprint in Docker
+- You can update Pterodactyl Panel, Blueprint, or both independently of each other.
+- Newer versions of Blueprint and/or extensions may not function as intended in older versions of Pterodactyl Panel.
+
+## Updating your version of Pterodactyl Panel
+- Go to the directory of your docker-compose.yml
+- ```bash
+    docker compose down
+  ```
+- Change the tag in your panel's image (i.e. to upgrade from **v1.11.5** to **v1.11.7**, you would change ``ghcr.io/blueprintframework/blueprint:v1.11.5`` to ``ghcr.io/blueprintframework/blueprint:v1.11.7``.
+- ```bash
+    docker compose pull
+  ```
+- ```bash
+    docker compose up -d
+  ```
+## Updating your version of Blueprint
+- /app is persistent data, so updating your panel image will NOT update blueprint. You _do_ have to manually update it despite pulling a newer image.
+- Go to the directory of your docker-compose.yml file
+### If you have set the alias as we recommend above
+- ```bash
+    blueprint -upgrade
+  ```
+### If you have not set the alias
+- ```bash
+    docker compose exec panel blueprint -upgrade
+  ```
 
 <!-- copyright footer -->
 <br/><br/>
