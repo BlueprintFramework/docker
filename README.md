@@ -102,7 +102,7 @@ docker compose -f /srv/pterodactyl/docker-compose.yml up -d
     - ```bash
       cd /srv/pterodactyl && echo -e '#!/bin/bash\n\nfor extension in "$@"\ndo\n    docker compose exec panel blueprint -i "$extension"\ndone' > bulk-install.sh && chmod +x bulk-install.sh
       ```
-  - The script will be located in the assumed root folder for your compose stack, /srv/pterodactyl. You can use it while in that folder with as many extensions as you want with:
+  - The script will be located in the assumed root folder for your compose stack, ``/srv/pterodactyl``. You can use it while in that folder with as many extensions as you want with:
     - ```bash
         ./bulk-install.sh extension1 extension2 extension3``
       ```
