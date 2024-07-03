@@ -87,6 +87,8 @@ docker compose -f /srv/pterodactyl/docker-compose.yml up -d
 - Newer versions of Blueprint and/or extensions may not function as intended in older versions of Pterodactyl Panel.
 
 ## Updating your version of Pterodactyl Panel
+- Make a backup of any persistent Blueprint data (instructions coming soon)
+- Delete the Blueprint volume (instructions coming soon)
 - Go to the directory of your docker-compose.yml
 - ```bash
     docker compose down
@@ -98,6 +100,7 @@ docker compose -f /srv/pterodactyl/docker-compose.yml up -d
 - ```bash
     docker compose up -d
   ```
+- Restore any persistent Blueprint data (instructions coming soon)
 ## Updating your version of Blueprint
 - /app is persistent data, so updating your panel image will NOT update blueprint. You _do_ have to manually update it despite pulling a newer image.
 - Note that if you experience issues with an update, you can use ``blueprint -upgrade remote`` instead of ``blueprint -upgrade``. By adding ``remote``, you tell it to pull the latest commit from the Github Repo rather than that latest release. If there are any bug fixes that haven't made it into a release yet, this would grab them. You can also head into the [Blueprint Discord Server](<https://discord.gg/CUwHwv6xRe>) for support. Remember to be clear about the issue you're facing and include
