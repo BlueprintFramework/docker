@@ -83,6 +83,17 @@ docker compose -f /srv/pterodactyl/docker-compose.yml up -d
 ```
 
 # Updating Blueprint in Docker
+## Option 1: Only update Blueprint
+- If you have set the alias we suggested earlier
+  ```bash
+  blueprint -upgrade
+  ```
+- If you have not
+  ```bash
+  docker compose -f /srv/pterodactyl/docker-compose.yml exec panel blueprint -upgrade
+  ```
+
+## Option 2: Update both Blueprint and Pterodactyl Panel
 - This guide operates under the assumption that individual extension/theme authors have chosen to store any persistent data such as settings in the database. If they have not done this... there isn't any specific place extension data is meant to be stored, so the data could be anywhere. You'll need to ask them if there is any persistent data stored anywhere that you have to back up before updating.
 - Go to the directory of your docker-compose.yml file
 - ```bash
