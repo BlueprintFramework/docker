@@ -96,26 +96,26 @@ docker compose -f /srv/pterodactyl/docker-compose.yml up -d
 ## Option 2: Update both Blueprint and Pterodactyl Panel
 - This guide operates under the assumption that individual extension/theme authors have chosen to store any persistent data such as settings in the database. If they have not done this... there isn't any specific place extension data is meant to be stored, so the data could be anywhere. You'll need to ask them if there is any persistent data stored anywhere that you have to back up before updating.
 - Go to the directory of your docker-compose.yml file
-- ```bash
-    docker compose down -v
+  ```bash
+  docker compose down -v
   ```
 - The -v tells it to delete any named volumes, i.e. the app volume we use. It will not delete data from bind-mounts. This way the new image's app volume can take place.
 - Change the tag in your panel's image (i.e. to upgrade from **v1.11.5** to **v1.11.7**, you would change ``ghcr.io/blueprintframework/blueprint:v1.11.5`` to ``ghcr.io/blueprintframework/blueprint:v1.11.7``.
-- ```bash
-    docker compose pull
+  ```bash
+  docker compose pull
   ```
-- ```bash
-    docker compose up -d
+  ```bash
+  docker compose up -d
   ```
 - Lastly, install your extensions again. Refer to [the examples](<https://github.com/BlueprintFramework/docker?tab=readme-ov-file#example-of-installing-an-extension>).
 - Blueprint will support installing multiple extensions at once in the future, making updates significantly easier. The syntax showcased was ``blueprint -i extension1 extension2 extension3``. Documentation here will be updated when that comes out, but for now you'll have to install each extension again every update. Feel free to automate this with a simple bash script:
   - Create the script
-    - ```bash
+      ```bash
       cd /srv/pterodactyl && echo -e '#!/bin/bash\n\nfor extension in "$@"\ndo\n    docker compose exec panel blueprint -i "$extension"\ndone' > bulk-install.sh && chmod +x bulk-install.sh
       ```
   - The script will be located in the assumed root folder for your compose stack, ``/srv/pterodactyl``. You can use it while in that folder with as many extensions as you want with:
-    - ```bash
-        ./bulk-install.sh extension1 extension2 extension3``
+      ```bash
+      ./bulk-install.sh extension1 extension2 extension3``
       ```
 <!-- copyright footer -->
 <br/><br/>
