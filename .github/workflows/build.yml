@@ -11,6 +11,8 @@ on:
       - 'Master'
     paths:
       - Dockerfile
+  schedule:
+    - cron: '0 1 * * TUE'
 
 jobs:
   build_and_push:
