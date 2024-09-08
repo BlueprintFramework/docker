@@ -126,8 +126,6 @@ services:
     # See https://github.com/Loki-101/cwings for info about cwings
     image: ghcr.io/loki-101/cwings:v1.11.13
     restart: always
-    networks:
-      - wings0
     ports:
       - "${WINGS_PORT}:${WINGS_PORT}"
       - "2022:2022"
