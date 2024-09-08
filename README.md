@@ -5,6 +5,10 @@
 <!-- Information -->
 <br/><h2 align="center">🐳 Blueprint in Docker</h2>
 
+### What is the difference between docker-compose.yml and classic-docker-compose.yml?
+- classic-docker-compose.yml stays as close to the stock Pterodactyl compose file as possible
+- docker-compose.yml (recommended) can and has been improved over time
+
 ### Uploading extensions
 Extensions must be placed/dragged into the `extensions` folder.
 
