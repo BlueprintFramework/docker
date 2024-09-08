@@ -7,7 +7,9 @@
 
 ### What is the difference between docker-compose.yml and classic-docker-compose.yml?
 - classic-docker-compose.yml stays as close to the stock Pterodactyl compose file as possible
+  - This means it still has the obsolete "version" attribute, has no health checks, and does not use a .env file for configuration
 - docker-compose.yml (recommended) can and has been improved over time
+  - If you are using this version, download and configure the .env file as well; most if not all configuration can be done through the .env file
 
 ### Uploading extensions
 Extensions must be placed/dragged into the `extensions` folder.
