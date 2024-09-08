@@ -8,6 +8,7 @@
 ### What is the difference between docker-compose.yml and classic-docker-compose.yml?
 - classic-docker-compose.yml stays as close to the stock Pterodactyl compose file as possible
   - This means it still has the obsolete "version" attribute, has no health checks, and does not use a .env file for configuration
+  - This file is simpler to look at and understand, mostly because it doesn't give you the same level of control and information at the recommended docker-compose.yml file
 - docker-compose.yml (recommended) can and has been improved over time
   - If you are using this version, download and configure the .env file as well; most if not all configuration can be done through the .env file
 
