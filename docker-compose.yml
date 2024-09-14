@@ -98,6 +98,8 @@ services:
       - "${BASE_DIR}/nginx/:/etc/nginx/http.d/"
       - "${BASE_DIR}/certs/:/etc/letsencrypt/live:ro"
       - "${BASE_DIR}/logs/:/app/storage/logs"
+      - "${BASE_DIR}/nginx/conf.d:/etc/nginx/conf.d"
+      - "/var/log/nginx:/var/log/nginx"
       - "/srv/pterodactyl/extensions/:/blueprint_extensions"
       - "app:/app"
     environment:
