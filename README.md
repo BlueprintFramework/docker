@@ -127,6 +127,6 @@ docker compose -f /srv/pterodactyl/docker-compose.yml up -d
 <!-- copyright footer -->
 <br/><br/>
 <p align="center">
-  $\color{#4b4950}{\textsf{© 2024 Ivy (prpl.wtf) and Loki}}$
+  $\color{#4b4950}{\textsf{© 2024 Emma (prpl.wtf) and Loki}}$
   <br/><br/><img src="https://github.com/BlueprintFramework/docker/assets/103201875/68a6038e-4922-4e1a-b1d4-f58a4c5db397"/>
 </p>
