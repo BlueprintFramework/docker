@@ -8,7 +8,7 @@ on:
     paths:
       - Dockerfile
   schedule:
-    - cron: '0 1 * * TUE'
+    - cron: '0 8 * * TUE'
 
 jobs:
   build_and_push:
