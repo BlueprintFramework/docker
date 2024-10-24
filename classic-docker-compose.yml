@@ -47,7 +47,7 @@ services:
     image: redis:alpine
     restart: always
   panel:
-    image: ghcr.io/blueprintframework/blueprint:v1.11.7
+    image: ghcr.io/blueprintframework/blueprint:v1.11.8
     restart: always
     ports:
       - "80:80"
