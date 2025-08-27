@@ -67,6 +67,7 @@ services:
       DB_PASSWORD: *db-password
       APP_ENV: "production"
       APP_ENVIRONMENT_ONLY: "false"
+      BOOTSTRAP_SEED_DATABASE: "true" # Comment this line out to disable the --seed flag on php artisan migrate when starting up.
       CACHE_DRIVER: "redis"
       SESSION_DRIVER: "redis"
       QUEUE_DRIVER: "redis"
