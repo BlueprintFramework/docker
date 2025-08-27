@@ -82,3 +82,9 @@ autorestart=false
 startsecs=0
 priority=1
 EOF
+
+# Override the default entrypoint script
+COPY entrypoint.sh entrypoint.sh
+RUN chmod +x entrypoint.sh
+ENTRYPOINT [ "/bin/ash", "entrypoint.sh" ]
+CMD [ "supervisord", "-n", "-c", "/etc/supervisord.conf" ]
