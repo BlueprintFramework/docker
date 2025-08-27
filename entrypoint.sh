@@ -70,8 +70,14 @@ do
 done
 
 ## make sure the db is set up
-echo -e "Migrating and Seeding D.B"
-php artisan migrate --seed --force
+echo -e "Running database tasks"
+if [ -n "$BOOTSTRAP_SEED_DATABASE" ]; then
+    echo "Seeding Database: Enabled, running migrate & seed now:"
+    php artisan migrate --seed --force
+else
+    echo "Seeding Database: Disabled, running migrate without seed:"
+    php artisan migrate --force
+fi
 
 ## start cronjobs for the queue
 echo -e "Starting cron jobs."
