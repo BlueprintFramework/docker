@@ -97,7 +97,7 @@ services:
     networks:
       - pterodactyl_stack
   panel:
-    image: ghcr.io/blueprintframework/blueprint:v1.14.1
+    image: ghcr.io/blueprintframework/blueprint:v1.15.0
     restart: always
     ports:
       - "${PANEL_PORT}:${PANEL_PORT}"
@@ -136,7 +136,7 @@ services:
       - pterodactyl_stack
   wings:
     # See https://github.com/Loki-101/cwings for info about cwings
-    image: ghcr.io/loki-101/cwings:v1.13.1
+    image: ghcr.io/loki-101/cwings:v1.13.2
     restart: always
     ports:
       - "${WINGS_PORT}:${WINGS_PORT}"
