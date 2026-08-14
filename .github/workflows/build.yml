@@ -15,7 +15,7 @@ jobs:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     env:
-      LATEST_VERSION: v1.15.0 # Determines :latest tag
+      LATEST_VERSION: v1.15.1 # Determines :latest tag
     strategy:
       fail-fast: false
       matrix:
@@ -30,6 +30,7 @@ jobs:
           - v1.14.0
           - v1.14.1
           - v1.15.0
+          - v1.15.1
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
